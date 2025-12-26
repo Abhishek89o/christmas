@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(#0b0f1a,#1a1f33);
+  overflow:hidden;
+  font-family:sans-serif;
+  color:white;
+}
+
+/* ❄️ Snow */
+.snow{
+  position:absolute;
+  top:-10px;
+  width:6px;
+  height:6px;
+  background:white;
+  border-radius:50%;
+  opacity:0.8;
+}
+
+/* 🎄 SVG Tree */
+#svgTree{
+  position:absolute;
+  bottom:120px;
+  left:50%;
+  transform:translateX(-50%);
+  width:200px;
+  display:none;
+}
+
+/* 💬 Message box */
+#msgBox{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,0.6);
+  padding:18px 22px;
+  border-radius:20px;
+  width:85%;
+  max-width:340px;
+  text-align:center;
+  z-index:2;
+}
+
+#msgText{
+  white-space:pre-line;
+  font-size:15px;
+}
+
+button{
+  margin-top:12px;
+  padding:7px 22px;
+  border:none;
+  border-radius:20px;
+  background:#ffb6c1;
+  font-size:15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎄 SVG TREE (LAST ME DIKHEGA) -->
+<svg id="svgTree" viewBox="0 0 200 260">
+  <polygon points="100,5 110,35 145,35 115,55 125,85 100,65 75,85 85,55 55,35 90,35"
+    fill="gold"/>
+  <polygon points="100,40 40,140 160,140" fill="#1abc6c"/>
+  <polygon points="100,90 30,200 170,200" fill="#16a085"/>
+  <rect x="85" y="200" width="30" height="40" fill="#6b3e26"/>
+</svg>
+
+<!-- 💬 Message -->
+<div id="msgBox">
+  <div id="msgText">Hello 👋</div>
+  <button onclick="nextMsg()">Next</button>
+</div>
+
+<script>
+/* ❄️ Snow */
+for(let i=0;i<40;i++){
+  let s=document.createElement("div");
+  s.className="snow";
+  document.body.appendChild(s);
+  gsap.set(s,{
+    x:Math.random()*innerWidth,
+    y:Math.random()*innerHeight,
+    scale:Math.random()+0.5
+  });
+  gsap.to(s,{
+    y:innerHeight+20,
+    duration:Math.random()*5+5,
+    repeat:-1,
+    ease:"none",
+    delay:Math.random()*5
+  });
+}
+
+/* 💬 Messages (QUESTION INCLUDED) */
+const messages=[
+"Hello 👋",
+
+"Dear… sorry thoda late ho gaya 🙏\nLaptop nahi tha,\nphone se banaya hai 📱😅",
+
+"Main ye sab aapke liye isliye karta hoon 💖\nKyunki aapki khushi\nmere liye bahut matter karti hai ✨🥹",
+
+"Pata nahi aap kab mujhse baat karna band kar do 😔\nIsliye ye chhote-chhote se efforts… se yaad to karogi kam se kam  ",
+
+"I know 😊\nAapki life ka **first centa**\nhamesha aapke Papa hi rahenge 👨‍👧❤️\n(aur ye bilkul sahi bhi hai 🙏)",
+
+"Bas ek chhota sa sawaal tha 🤭😄\nKya mujhe kabhi\n**second centa** banne ka\nthoda sa chance milega? 😜🙈",
+
+"Iska jawab dena jab apka man ho tab dena 😊\nBas itna yaad rakhna…\nmeri life me aap hamesha special rahogi 💝✨"
+];
+
+let i=0;
+const msgText=document.getElementById("msgText");
+const btn=document.querySelector("button");
+const tree=document.getElementById("svgTree");
+
+function nextMsg(){
+  i++;
+
+  if(i>=messages.length){
+    btn.innerText="marry cristmas❤️";
+    tree.style.display="block";
+
+    gsap.fromTo(
+      tree,
+      {opacity:0, scale:0.6},
+      {opacity:1, scale:1, duration:1, ease:"bounce.out"}
+    );
+    return;
+  }
+
+  gsap.fromTo(
+    msgText,
+    {opacity:0,y:20},
+    {opacity:1,y:0,duration:0.6}
+  );
+
+  msgText.innerText=messages[i];
+}
+</script>
+
+</body>
+</html>
